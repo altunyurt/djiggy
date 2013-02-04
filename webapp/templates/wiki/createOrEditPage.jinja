@@ -1,0 +1,37 @@
+{%  extends "base.jinja" %}
+
+{% block content %}
+    <form action="." method="post">
+        {%  csrf_token %}
+        <ul>
+            <li>
+                <ul>
+                    <li> <input type="submit" value="{% trans %}Save{% endtrans %}"/> </li>
+                    <li> <input id="preview" type="submit" value="{% trans %}Preview{% endtrans %}"/> </li>
+                </ul>
+            </li>
+            <li><div id="preview_field"></div></li>
+            {{ form.as_ul() }}
+        </ul>
+    </form>
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script type="text/javascript" src="/media/js/utils.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            csrftokenize();
+
+            $("#preview").click(function(ev){
+                ev.preventDefault();
+                $.post("{{ url_for('wikiPreviewPage')}}", 
+                        {content: $("#id_content").val()},
+                        function(data){
+                            $("#preview_field").html(data);
+                        }
+                )
+            })
+        });
+    </script>
+{% endblock js %}

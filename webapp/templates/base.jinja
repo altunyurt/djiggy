@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        {% block head %} {% endblock %}
+    </head>
+    <body>
+        {% block left_frame %} {% endblock left_frame %}
+
+        {% block content %} {% endblock %}
+
+         {% block right_frame %} {% endblock right_frame %}
+
+        <script type="text/javascript" src="/media/js/jquery/jquery-1.9.0.min.js"></script>
+        {% block js %} {% endblock %}
+    </body>
+</html>

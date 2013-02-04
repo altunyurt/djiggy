@@ -1,0 +1,10 @@
+{% extends "base.jinja" %}
+
+{% block content %}
+    <p>
+        {% trans url = url_for('wikiCreatePage', page_title) %}
+        We couldn't find the page you ar looking for, maybe some of the following pages might be it. If not,
+        you can create <a href="{{ url }}">new one here</a>
+        {% endtrans %}
+    </p>  
+{% endblock content %}
