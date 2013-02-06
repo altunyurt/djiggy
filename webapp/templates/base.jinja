@@ -3,15 +3,43 @@
     <head>
         <meta charset="UTF-8">
         <title></title>
+        <link rel="stylesheet" href="/media/css/style.css" type="text/css"/>
         {% block head %} {% endblock %}
     </head>
     <body>
-        {% block left_frame %} {% endblock left_frame %}
+        <header>
+            {% if page_name != "login_page" %}
+                {% include 'partial/topRight.jinja' %}
+            {% endif %}
+        </header>
+        <section id="main">
+            <section id="left_frame" class="col col_4">
+                &nbsp;
+                {% block left_frame %} {% endblock left_frame %}
+            </section>
 
-        {% block content %} {% endblock %}
-
-         {% block right_frame %} {% endblock right_frame %}
-
+            <section id="content" class="col col_12">
+            {% if page_name != "login_page" %}
+                <ul id="page_commands">
+                    {% if editing %}
+                    <li><a href="{{ url_for('wikiShowPage', page_title) }}">{% trans %}View{% endtrans %}</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('wikiEditPage', page_title) }}">{% trans %}Edit{% endtrans %}</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('wikiShowRevisions', page_title) }}">{% trans %}Revisions{% endtrans %}</a></li>
+                </ul>
+            {% endif %}
+                <hr />
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                {% block content %} {% endblock %}
+             </section>
+        </section>
+        <footer>
+        </footer>
         <script type="text/javascript" src="/media/js/jquery/jquery-1.9.0.min.js"></script>
         {% block js %} {% endblock %}
     </body>

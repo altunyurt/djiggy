@@ -1,2 +1,72 @@
 @import "reset.css";
-@import "grid.css";
+
+ul {
+    list-style-type: none;
+
+    &#page_commands {
+        clear: both;
+        float: right;
+
+        li {
+            float: left;
+            display: inline-block;
+            margin-right: 20px;
+        }
+    }
+
+    &#edit_commands {
+        display: block;
+        width: 100%;
+        li {
+            float: left;
+            display: inline-block;
+            margin-right: 10px;
+        }
+    }
+
+    &#editform_ul {
+        li {
+            display: block;
+            height: auto;
+            overflow: hidden;
+        }
+    }
+
+}
+
+section#content {
+    position: absolute;
+    left: 210px;
+    right: 10px;
+}
+
+section#left_frame {
+    float: left;
+    width: 200px;
+}
+
+section#main {
+    margin-top: 10px;
+}
+
+footer {
+    background-color: rgba(44,44,44, 0.2);
+    height: 100px;
+    display: block;
+}
+
+textarea {
+    min-height: 1.5em;
+    height: auto;
+    overflow: auto;
+    line-height: 1.5em;
+    padding: 5px;
+    width: 400px;
+
+    &#id_message {
+        height: 1.5em;
+    }
+}
+
+
+

@@ -1,0 +1,13 @@
+        {% if request.user.is_authenticated() %}
+            hello {{ request.user.email }} 
+        {% else %}
+            <form action="{{ url_for('wikiLogin') }}" method="post" accept-charset="utf-8">
+                {% csrf_token %}
+                <ul>
+                    {{ loginForm.as_ul() }}
+                    <li><input type="submit" value="Continue →"></li>
+                </ul>
+            </form>
+            
+        {% endif %}
+

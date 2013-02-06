@@ -1,0 +1,16 @@
+{% extends "base.jinja" %}
+
+{% set page_name = "login_page" %}
+
+{% block content %}
+    {% include 'partial/topRight.jinja' %}
+
+    <form action="{{ url_for('wikiRegister') }}" method="post" accept-charset="utf-8">
+        {% csrf_token %}
+        <ul>
+            {{ registerForm.as_ul() }}
+            <li><input type="submit" value="Continue →"></li>
+        </ul>
+    
+    </form>
+{% endblock content %}

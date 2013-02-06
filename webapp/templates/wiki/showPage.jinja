@@ -1,7 +1,7 @@
 {% extends "base.jinja" %}
 
 {% block content %}
-    {{ page.title.replace("_", " ") }} 
+    {{ page.readable_title }}
     <hr>
     {{ page.content }}
 {% endblock %}
