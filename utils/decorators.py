@@ -4,22 +4,25 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from utils.helpers import reverse_lazy
 from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.contrib import messages
 
 
 import logging
 logger = logging.getLogger(__name__)
 
 class _requires_something(object):
-    def __init__(self, redirect_to='index'):
+    def __init__(self, redirect_to='index', message=None):
         self.redirect_to = reverse_lazy(redirect_to)
+        self.message = message
 
     def control_seq(self, f, request, *args, **kwargs):
-        raise Exception(u'Bu kisim request kontrolu icermelidir')
+        raise Exception(u'control_seq should be implemented')
 
     def __call__(self, view_func):
         def wrapped_func(request, *args, **kwargs):
             return self.control_seq(view_func, request, *args, **kwargs)
         return wrapped_func
+
 
 class requires_nameless(_requires_something):
     def control_seq(self, f, request, *args, **kwargs):
@@ -27,11 +30,13 @@ class requires_nameless(_requires_something):
             return HttpResponseRedirect( self.redirect_to ) 
         return f(request, *args, **kwargs)
 
+
 class requires_username(_requires_something):
     def control_seq(self, f, request, *args, **kwargs):
         if request.user.username in ('', None):
             return HttpResponseRedirect( self.redirect_to ) 
         return f(request, *args, **kwargs)
+
 
 class requires_anonymous(_requires_something):
     ''' kullanici hesabi login edilmisse bu kisma erisemesin'''
@@ -91,6 +96,7 @@ class requires_login(_requires_something):
         response = HttpResponseRedirect(self.redirect_to)
         ''' login yonlendirmelerinde next gitmek istedigi adres olmali '''
         response.set_cookie('next', request.path)
+        messages.warning(request, self.message)
         return response
 
 

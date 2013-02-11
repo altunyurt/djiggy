@@ -10,39 +10,39 @@ from django.contrib import messages
 from main.forms import LoginForm, RegisterForm
 
 
-def wikiLogout(request):
+def wiki_logout(request):
     logout(request)
     return HttpResponseRedirect("/")
 
 
-def wikiLogin(request):
-    registerForm = RegisterForm()
+def wiki_login(request):
+    register_form = RegisterForm()
     if request.method == "POST":
-        loginForm = LoginForm(request.POST)
-        if loginForm.is_valid():
-            cdata = loginForm.cleaned_data
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
+            cdata = login_form.cleaned_data
             user = authenticate(email=cdata.get("email"), 
                                 password=cdata.get("password"))
             if user:
                 login(request, user)
-                return HttpResponseRedirect("/")
+                return HttpResponseRedirect(request.COOKIES.get("next", "/"))
             messages.error(request, _("Wrong email or password "))
 
     else:
-        loginForm = LoginForm()
+        login_form = LoginForm()
     return render_to_response("auth/login_or_register.jinja", locals())
 
 
-def wikiRegister(request):
+def wiki_register(request):
     if request.method == "POST":
-        registerForm = RegisterForm(request.POST)
-        if registerForm.is_valid():
-            cdata = registerForm.cleaned_data
+        register_form = RegisterForm(request.POST)
+        if register_form.is_valid():
+            cdata = register_form.cleaned_data
             user = User.objects.create(email=cdata.get("email"),
                                       username=cdata.get("email"))
             user.set_password(cdata.get("password"))
             user.save()
             return HttpResponseRedirect("/")
     else:
-        registerForm = RegisterForm()
+        register_form = RegisterForm()
     return render_to_response("auth/login_or_register.jinja", locals())

@@ -35,18 +35,21 @@ ul {
 }
 
 section#content {
-    position: absolute;
-    left: 210px;
-    right: 10px;
+    margin-left: 210px;
 }
 
 section#left_frame {
-    float: left;
     width: 200px;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 section#main {
     margin-top: 10px;
+    position: relative;
+    height: auto;
+    overflow: hidden;
 }
 
 footer {
@@ -68,5 +71,10 @@ textarea {
     }
 }
 
+p {
+    margin: 0.3em auto;
+}
 
-
+#revision_list {
+    display: block;
+}

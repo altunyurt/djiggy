@@ -1,6 +1,17 @@
 {%  extends "base.jinja" %}
 
+{% if page %}
+    {% set page_name = "edit_page" %}
+{% else %}
+    {% set page_name = "create_page" %}
+{% endif %}
+
 {% block content %}
+    {% if page_name == "create_page" %}
+        {% trans %} Creating new page {{ page_title }} {% endtrans %}
+    {% else %}
+        {% trans %} Editing page {{ page_title }} {% endtrans %}
+    {% endif %}
     <form action="." method="post">
         {%  csrf_token %}
         <ul id="editform_ul">
@@ -24,8 +35,8 @@
             csrftokenize();
 
             $("#preview").click(function(ev){
-                ev.preventDefault();
-                $.post("{{ url_for('wikiPreviewPage')}}", 
+                ev.prevent_default();
+                $.post("{{ url_for('wiki_preview_page')}}", 
                         {content: $("#id_content").val()},
                         function(data){
                             $("#preview_field").html(data);

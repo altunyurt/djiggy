@@ -9,24 +9,22 @@
     <body>
         <header>
             {% if page_name != "login_page" %}
-                {% include 'partial/topRight.jinja' %}
+                {% include 'partial/top_right.jinja' %}
             {% endif %}
         </header>
         <section id="main">
             <section id="left_frame" class="col col_4">
-                &nbsp;
                 {% block left_frame %} {% endblock left_frame %}
             </section>
-
             <section id="content" class="col col_12">
             {% if page_name != "login_page" %}
                 <ul id="page_commands">
-                    {% if editing %}
-                    <li><a href="{{ url_for('wikiShowPage', page_title) }}">{% trans %}View{% endtrans %}</a></li>
+                    {% if page_name == "edit_page" %}
+                    <li><a href="{{ url_for('wiki_show_page', page_title) }}">{% trans %}View{% endtrans %}</a></li>
                     {% else %}
-                    <li><a href="{{ url_for('wikiEditPage', page_title) }}">{% trans %}Edit{% endtrans %}</a></li>
+                    <li><a href="{{ url_for('wiki_edit_page', page_title) }}">{% trans %}Edit{% endtrans %}</a></li>
                     {% endif %}
-                    <li><a href="{{ url_for('wikiShowRevisions', page_title) }}">{% trans %}Revisions{% endtrans %}</a></li>
+                    <li><a href="{{ url_for('wiki_list_revisions', page_title) }}">{% trans %}Revisions{% endtrans %}</a></li>
                 </ul>
             {% endif %}
                 <hr />
@@ -36,7 +34,7 @@
                     {% endfor %}
                 {% endif %}
                 {% block content %} {% endblock %}
-             </section>
+            </section>
         </section>
         <footer>
         </footer>

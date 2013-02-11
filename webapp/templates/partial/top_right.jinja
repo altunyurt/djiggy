@@ -1,0 +1,16 @@
+        {% if request.user.is_authenticated() %}
+            <ul>
+                <li> hello {{ request.user.email }} </li>
+                <li><a href='{{ url_for("wiki_logout") }}'>{% trans %} Logout {% endtrans %}</a></li>
+            </ul>
+        {% else %}
+            <form action="{{ url_for('wiki_login') }}" method="post" accept-charset="utf-8">
+                {% csrf_token %}
+                <ul>
+                    {{ login_form.as_ul() }}
+                    <li><input type="submit" value="Continue →"></li>
+                </ul>
+            </form>
+            
+        {% endif %}
+

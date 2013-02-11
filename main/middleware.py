@@ -8,7 +8,7 @@ import re
 
 from utils.decorators import reverse_lazy
 """ delete the preceding /'s from path_info """
-path_re = re.compile(r"^/+")
+path_re = re.compile(r"(^/+|/+$)")
 
 import threading
 _thread_locals = threading.local()
@@ -55,10 +55,11 @@ class ThreadLocals(object):
         set_remote_ip(request.META.get('REMOTE_ADDR', None))
         _thread_locals.request = request
 
-class RedirecttoCreate(object):
+
+class RedirectToCreate(object):
     """If page does not exist, then we mighmt want to create it"""
     def process_exception(self, request, exception):
         if isinstance(exception, Http404):
             page_title = path_re.sub("", request.META.get("PATH_INFO"))
-            return HttpResponseRedirect(reverse_lazy("wikiShowSimilarPages", args=[page_title]))
+            return HttpResponseRedirect(reverse_lazy("wiki_show_similar_pages", args=[page_title]))
 

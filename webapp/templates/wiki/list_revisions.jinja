@@ -12,12 +12,13 @@
         </thead>
         <tbody>
             {% for revision in revisions %}
+                {% set ruser = {"id": revision.user__id, "full_name": "%s %s" % (revision.user__first_name, revision.user__last_name)} %}
                 <tr>
                     <td>{{ revision.datetime }}</td>
                     <td><input type="checkbox" name="revision"></td>
-                    <td><a href="{{ url_for('wikiShowUser', ruser.id)}}">{{ ruser.full_name }}</td>
+                    <td><a href="{{ url_for('wiki_show_user', ruser.id)}}">{{ ruser.full_name }}</td>
                     <td>{% if not loop.first %}
-                            <a href='{{ url_for("wikiRevertPageToRevision", page_title, revision.id)}}'>
+                            <a href='{{ url_for("wiki_revert_page_to_revision", page_title, revision.id)}}'>
                                 {% trans %} Revert {% endtrans %}</a>
                         {% endif %}
                     </td>

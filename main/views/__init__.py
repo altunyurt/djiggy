@@ -1,88 +1,106 @@
 # ~*~ coding:utf-8 ~*~
 
-""" wiki komutları wikiCamelCase şeklinde isimlendiriliyor 
-    değişkenler ise değişken_adı
+""" 
+    Main wiki functions are defined here. 
+
+    naming convention: 
+        function+class names are in camelCase format
+        variable names, class+instance methods are in under_scores
 """
 
 from djtemps import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
-from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages 
 from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext_lazy as _
 
 from main.models import Page, Revision
-from main.forms import PageForm 
+from main.forms import PageRevisionForm, RevertRevisionForm
+from main.messages import action_messages
 from utils.helpers import reverse_lazy, markdown_to_html
+from utils.decorators import requires_login
+
 
 def index(request):
     return render_to_response("index.jinja", locals())
 
 
-def wikiCreatePage(request, page_title):
+@requires_login("wiki_login", _("Login required to be able to edit pages"))
+def wiki_create_page(request, page_title):
     if request.method == "POST":
-        form = PageForm(request.POST)
+        form = PageRevisionForm(request.POST)
         if form.is_valid():
             page, created = Page.objects.get_or_create(title=page_title)
-            if not created:
-                messages.warning(request, _("""Seems that the page '%s' already exists, therefore you are redirected to
-                                  that page""" % page_title))
-                return HttpResponseRedirect(reverse_lazy("wikiShowPage", args=[page_title]))
-
-            revision = Revision.objects.create(page=page, 
-                                               content=form.cleaned_data.get("content"),
-                                               user=request.user,
-                                              message=form.cleaned_data.get("message"))
-            page.update(revision=revision)
-            messages.success(request, _("""Page '%s' created successfuly"""))
-            return HttpResponseRedirect(reverse_lazy("wikiShowPage", args=[page_title]))
+            form.save(page)
+            messages.success(request, action_messages.get("page_created"))
+            return HttpResponseRedirect(reverse_lazy("wiki_show_page", args=[page_title]))
 
     else: 
-        form = PageForm()
-    return render_to_response("wiki/createOrEditPage.jinja", locals())
+        form = PageRevisionForm()
+    return render_to_response("wiki/create_or_edit_page.jinja", locals())
     
 
-def wikiEditPage(request, page_title):
+def wiki_edit_page(request, page_title):
     page = get_object_or_404(Page, title=page_title)
-    form = PageForm(instance=page)
+    current_revision = page.current
+    form = PageRevisionForm(initial=current_revision.to_dict())
 
     if request.method == "POST":
         """ do not allow any other changes """
-        form = PageForm({"content": request.POST.get("content")}, instance=page)
+        form = PageRevisionForm(request.POST,
+                        initial=current_revision.to_dict())
+        
         if form.is_valid():
-            page = form.save()
-            messages.success(request, _("""Page updated"""))
-            return HttpResponseRedirect(reverse_lazy("wikiShowPage", args=[page_title]))
+            form.save(page)
+            messages.success(request, action_messages.get("page_updated"))
+            return HttpResponseRedirect(reverse_lazy("wiki_show_page", args=[page_title]))
 
-    return render_to_response("wiki/createOrEditPage.jinja", locals())
+    return render_to_response("wiki/create_or_edit_page.jinja", locals())
 
 
-def wikiShowPage(request, page_title):
+def wiki_show_page(request, page_title):
     page = get_object_or_404(Page, title=page_title)
-    return render_to_response("wiki/showPage.jinja", locals())
+    return render_to_response("wiki/show_page.jinja", locals())
 
 
-def wikiShowSimilarPages(request, page_title):
+def wiki_show_similar_pages(request, page_title):
     """ This is a fallback method, that is executed upon Http404 exceptions 
     that will list the pages named similarly to the page_title """
 
     pages = Page.objects.get_similar_pages(page_title)
-    return render_to_response("wiki/showSimilarPages.jinja", locals())
+    return render_to_response("wiki/show_similar_pages.jinja", locals())
 
 
-def wikiPreviewPage(request):
+def wiki_preview_page(request):
     """ simple post/get view, returns the output of markdown parser """
     return HttpResponse(markdown_to_html(request.POST.get("content")))
     
 
-def wikiShowRevisions(request, page_title):
+def wiki_list_revisions(request, page_title):
     """ list revisions of given page """
+    page = get_object_or_404(Page.objects.select_related("revision", "revision__user"), title=page_title)
+    revisions = page.revisions.values("user__first_name", "user__last_name", "user__id",
+                                     "datetime", "id")
+    return render_to_response("wiki/list_revisions.jinja", locals())
+
+
+def wiki_revert_page_to_revision(request, page_title, revision_id):
     page = get_object_or_404(Page, title=page_title)
-    revisions = page.revisions.values("revision")
-    return render_to_response("wiki/showRevisions.jinja", locals())
+    revision = get_object_or_404(Revision, page=page, id=revision_id)
+    
+    if request.method == "POST":
+        form = RevertRevisionForm(request.POST)
+        if form.is_valid():
+            page.revert_to_revision(revision)
+
+    return render_to_response("wiki/revert_page_to_revision.jinja", locals())
 
 
-def wikiShowDiffs(request, page_title, revision1, revision2):
+def wiki_show_diffs(request, page_title, revision1, revision2):
     """ show diffs of revisions of given page """
     revision1 = get_object_or_404(Revision, page__title=page_title, revision=revision1)
     revision2 = get_object_or_404(Revision, page__title=page_title, revision=revision2)
-    return render_to_response("wiki/showRevisions.jinja", locals())
+    return render_to_response("wiki/show_revisions.jinja", locals())
+
+def wiki_show_user(request, user_id, full_name=None):
+    return HttpResponse("")

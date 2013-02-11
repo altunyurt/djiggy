@@ -14,7 +14,7 @@ JINJA_EXTENSIONS = ['djtemps.jinja_extensions.Markdown2Extension', 'jinja2.ext.w
 JINJA_METHODS = ['djtemps.jinja_methods.url_for','djtemps.jinja_methods.logger']
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + \
-                    ('main.context_processors.loginform',)
+                    ('main.context_processors.login_form',)
 
 AUTHENTICATION_BACKENDS = ( 
     #'social_auth.backends.twitter.TwitterBackend',

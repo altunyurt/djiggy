@@ -3,12 +3,12 @@
 {% set page_name = "login_page" %}
 
 {% block content %}
-    {% include 'partial/topRight.jinja' %}
+    {% include 'partial/top_right.jinja' %}
 
-    <form action="{{ url_for('wikiRegister') }}" method="post" accept-charset="utf-8">
+    <form action="{{ url_for('wiki_register') }}" method="post" accept-charset="utf-8">
         {% csrf_token %}
         <ul>
-            {{ registerForm.as_ul() }}
+            {{ register_form.as_ul() }}
             <li><input type="submit" value="Continue →"></li>
         </ul>
     

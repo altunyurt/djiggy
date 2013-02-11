@@ -2,5 +2,5 @@
 
 from main.forms import LoginForm
 
-def loginform(request):
-    return {"loginForm": LoginForm()}
+def login_form(request):
+    return {"login_form": LoginForm()}
