@@ -5,9 +5,10 @@
         <thead>
             <tr>
                 <td>{% trans %} Revision {% endtrans %}</td>
-                <td>{% trans %} Diff {% endtrans %}</td>
+                <td colspan="2">{% trans %} Diff {% endtrans %}</td>
                 <td>{% trans %} Author {% endtrans %}</td>
                 <td>{% trans %} Revert to {% endtrans %}</td>
+                <td></td>
             </tr>
         </thead>
         <tbody>
@@ -15,12 +16,18 @@
                 {% set ruser = {"id": revision.user__id, "full_name": "%s %s" % (revision.user__first_name, revision.user__last_name)} %}
                 <tr>
                     <td>{{ revision.datetime }}</td>
-                    <td><input type="checkbox" name="revision"></td>
+                    <td><input type="radio" name="diff_left"></td>
+                    <td><input type="radio" name="diff_right"></td>
                     <td><a href="{{ url_for('wiki_show_user', ruser.id)}}">{{ ruser.full_name }}</td>
                     <td>{% if not loop.first %}
                             <a href='{{ url_for("wiki_revert_page_to_revision", page_title, revision.id)}}'>
                                 {% trans %} Revert {% endtrans %}</a>
                         {% endif %}
+                    </td>
+                    <td>
+                        {% if revision.id == page.revision_id %}
+                            {% trans %} current revision {% endtrans %}
+                        {% endif %} 
                     </td>
                 </tr>
             {% endfor %}

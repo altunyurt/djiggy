@@ -78,8 +78,11 @@ def wiki_preview_page(request):
 
 def wiki_list_revisions(request, page_title):
     """ list revisions of given page """
-    page = get_object_or_404(Page.objects.select_related("revision", "revision__user"), title=page_title)
-    revisions = page.revisions.values("user__first_name", "user__last_name", "user__id",
+    page = get_object_or_404(Page.objects.select_related("revision", "revision__user"), 
+                             title=page_title)
+    revisions = page.revisions.values("user__first_name", 
+                                      "user__last_name", 
+                                      "user__id",
                                      "datetime", "id")
     return render_to_response("wiki/list_revisions.jinja", locals())
 
@@ -91,8 +94,11 @@ def wiki_revert_page_to_revision(request, page_title, revision_id):
     if request.method == "POST":
         form = RevertRevisionForm(request.POST)
         if form.is_valid():
-            page.revert_to_revision(revision)
-
+            form.save(page, revision)
+            messages.success(request, action_messages.get("page_reverted") % revision.datetime)
+            return HttpResponseRedirect(reverse_lazy("wiki_list_revisions", args=[page_title]))
+    else:
+        form = RevertRevisionForm()
     return render_to_response("wiki/revert_page_to_revision.jinja", locals())
 
 

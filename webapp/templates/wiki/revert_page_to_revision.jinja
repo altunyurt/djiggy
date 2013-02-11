@@ -1,4 +1,11 @@
 {% extends "base.jinja" %}
 {% block content %}
-    reverting page_title to revision revision_id
+    Page {{ page_title }} to {{ revision }} is that ok ? 
+    <form action="." method="post" accept-charset="utf-8">
+        {% csrf_token %}
+        <ul>
+            {{ form.as_ul() }}
+            <li><input type="submit" value="Continue →"></li>
+        </ul>
+    </form>
 {% endblock content %}

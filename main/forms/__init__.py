@@ -47,5 +47,12 @@ class RegisterForm(forms.Form):
 
 
 class RevertRevisionForm(forms.Form):
-    message = forms.CharField(widget=forms.TextInput(), required=False)
+    message = forms.CharField(widget=forms.Textarea(), required=True)
 
+    def save(self, page, revision):
+        data = self.cleaned_data
+        return page.revert_to_revision(revision, 
+                                       message=data.get("message"),
+                                        content_type_other=ContentType.objects.get_for_model(Revision),
+                                        object_id_other=revision.id
+                                      )
