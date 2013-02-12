@@ -3,7 +3,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from main.models import Revision, ActionLog, ContentType
+from main.models import Revision, ContentType
 from main.middleware import get_current_user
 
 class PageRevisionForm(forms.Form):

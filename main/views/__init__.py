@@ -17,7 +17,7 @@ from django.utils.translation import ugettext_lazy as _
 from main.models import Page, Revision
 from main.forms import PageRevisionForm, RevertRevisionForm
 from main.messages import action_messages
-from utils.helpers import reverse_lazy, markdown_to_html
+from utils.helpers import reverse_lazy, markdown_to_html, show_diff
 from utils.decorators import requires_login
 
 
@@ -102,11 +102,12 @@ def wiki_revert_page_to_revision(request, page_title, revision_id):
     return render_to_response("wiki/revert_page_to_revision.jinja", locals())
 
 
-def wiki_show_diffs(request, page_title, revision1, revision2):
+def wiki_show_diffs(request, page_title):
     """ show diffs of revisions of given page """
-    revision1 = get_object_or_404(Revision, page__title=page_title, revision=revision1)
-    revision2 = get_object_or_404(Revision, page__title=page_title, revision=revision2)
-    return render_to_response("wiki/show_revisions.jinja", locals())
+    revision1 = get_object_or_404(Revision, page__title=page_title, id=request.GET.get("revision_1"))
+    revision2 = get_object_or_404(Revision, page__title=page_title, id=request.GET.get("revision_2"))
+    diff = show_diff(revision1.content_html, revision2.content_html)
+    return render_to_response("wiki/show_diff.jinja", locals())
 
 def wiki_show_user(request, user_id, full_name=None):
     return HttpResponse("")

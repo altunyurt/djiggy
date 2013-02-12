@@ -7,6 +7,7 @@ import re
 
 from utils.model_base import _Model, models, QuerySet
 from main.middleware import get_current_user, get_remote_ip
+from utils.helpers import  markdown_to_html
 
 # matches single _s only, two or more _s will be left untouched
 re_title = re.compile(r"(?<!_)_(?!_)")
@@ -56,7 +57,8 @@ class _Base(_Model):
 
 class Revision(_Base): 
     page = models.ForeignKey("Page", related_name="revisions")
-    content = models.TextField(null=True)
+    content = models.TextField(null=True, blank=True)
+    content_html = models.TextField(null=True, blank=True)
     datetime = models.DateTimeField(auto_now_add=True)
     logs = generic.GenericRelation("ActionLog")
     user = models.ForeignKey(User)
@@ -65,7 +67,12 @@ class Revision(_Base):
         ordering = ["-datetime"]
 
     def __unicode__(self):
-        return u"%s %s" % (self.page.title, self.datetime)
+        return u"%s Date: %s Id: %s" % (self.page.title, self.datetime.strftime("%Y-%m-%d %H:%M:%S"), self.id)
+
+    def save(self, *args, **kwargs):
+        self.content_html = markdown_to_html(self.content)
+        return super(Revision, self).save(*args, **kwargs)
+
 
 
 class Page(_Base):

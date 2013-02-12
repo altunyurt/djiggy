@@ -3,28 +3,36 @@
     <head>
         <meta charset="UTF-8">
         <title></title>
+        <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,400italic,600italic,700italic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/media/css/reset.css" type="text/css"/>
+        <link rel="stylesheet" href="/media/css/css3.css" type="text/css"/>
+        <link rel="stylesheet" href="/media/css/grid.css" type="text/css"/>
         <link rel="stylesheet" href="/media/css/style.css" type="text/css"/>
         {% block head %} {% endblock %}
     </head>
     <body>
-        <header>
+        <header class="row">
             {% if page_name != "login_page" %}
                 {% include 'partial/top_right.jinja' %}
             {% endif %}
         </header>
-        <section id="main">
+        <section id="main" class="row">
             <section id="left_frame" class="col col_4">
-                {% block left_frame %} {% endblock left_frame %}
+                {% block left_frame %} 
+                    <div>
+                        hurr
+                    </div>
+                {% endblock left_frame %}
             </section>
             <section id="content" class="col col_12">
             {% if page_name != "login_page" %}
                 <ul id="page_commands">
                     {% if page_name == "edit_page" %}
-                    <li><a href="{{ url_for('wiki_show_page', page_title) }}">{% trans %}View{% endtrans %}</a></li>
+                    <li><a href="{{ url_for('wiki_show_page', page_title) }}">{% trans %}Read{% endtrans %}</a></li>
                     {% else %}
                     <li><a href="{{ url_for('wiki_edit_page', page_title) }}">{% trans %}Edit{% endtrans %}</a></li>
                     {% endif %}
-                    <li><a href="{{ url_for('wiki_list_revisions', page_title) }}">{% trans %}Revisions{% endtrans %}</a></li>
+                    <li><a href="{{ url_for('wiki_list_revisions', page_title) }}">{% trans %}Page History{% endtrans %}</a></li>
                 </ul>
             {% endif %}
                 <hr />
@@ -36,7 +44,7 @@
                 {% block content %} {% endblock %}
             </section>
         </section>
-        <footer>
+        <footer class="row">
         </footer>
         <script type="text/javascript" src="/media/js/jquery/jquery-1.9.0.min.js"></script>
         {% block js %} {% endblock %}

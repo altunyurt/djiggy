@@ -19,7 +19,7 @@ urlpatterns += patterns(
     url(r'^wiki_list_revisions/(?P<page_title>\w+)/$', 'wiki_list_revisions', name='wiki_list_revisions'),
     url(r'^wiki_revert_page_to_revision/(?P<page_title>\w+)/(?P<revision_id>\d+)/$', 'wiki_revert_page_to_revision',
         name='wiki_revert_page_to_revision'),
-    url(r'^wiki_show_diffs/(?P<page_title>\w+)/(?P<revision1>\w+)/(?P<revision2>\w+)/$', 'wiki_show_diffs', name='wiki_show_diffs'),
+    url(r'^wiki_show_diff/(?P<page_title>\w+)/$', 'wiki_show_diffs', name='wiki_show_diffs'),
     url(r'^wiki_show_user/(?P<user_id>\d+)(?:/(?P<full_name>\w+))?/$', 'wiki_show_user', name='wiki_show_user'),
     url(r'^(?P<page_title>\w+)/$', 'wiki_show_page', name='wiki_show_page'),
     url(r'^$', redirect_to, {"url": "/Index"}),
