@@ -1,4 +1,4 @@
-{%  extends "base.jinja" %}
+{%  extends "wiki/wiki_base.jinja" %}
 
 {% if page %}
     {% set page_name = "edit_page" %}
@@ -7,6 +7,7 @@
 {% endif %}
 
 {% block content %}
+    {{ super() }}
     {% if page_name == "create_page" %}
         {% trans %} Creating new page {{ page_title }} {% endtrans %}
     {% else %}

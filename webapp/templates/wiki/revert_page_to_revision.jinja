@@ -1,5 +1,7 @@
-{% extends "base.jinja" %}
+{% extends "wiki/wiki_base.jinja" %}
+
 {% block content %}
+    {{ super() }}
     Page {{ page_title }} to {{ revision }} is that ok ? 
     <form action="." method="post" accept-charset="utf-8">
         {% csrf_token %}

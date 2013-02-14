@@ -1,0 +1,20 @@
+{% extends "base.jinja" %}
+
+{% block content %}
+                <ul id="page_commands" class="right horizontal">
+                    {% if page_name == "edit_page" %}
+                    <li><a href="{{ url_for('wiki_show_page', page_title) }}">{% trans %}Read{% endtrans %}</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('wiki_edit_page', page_title) }}">{% trans %}Edit{% endtrans %}</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('wiki_list_revisions', page_title) }}">{% trans %}Page History{% endtrans %}</a></li>
+                </ul>
+{% endblock content %}
+
+{% block left_frame %}
+    {{ super() }}
+    <ul class="navigation">
+        <li><a href="{{ url_for('') }}"></a></li>
+    </ul>
+{% endblock left_frame %}
+

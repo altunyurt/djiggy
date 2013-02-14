@@ -1,14 +1,15 @@
         {% if request.user.is_authenticated() %}
-            <ul>
-                <li> hello {{ request.user.email }} </li>
+            <ul class="horizontal right">
+                <li> {{ request.user.full_name }} </li>
+                <li> {{ url_for("account_settings") }} </li>
                 <li><a href='{{ url_for("wiki_logout") }}'>{% trans %} Logout {% endtrans %}</a></li>
             </ul>
         {% else %}
             <form action="{{ url_for('wiki_login') }}" method="post" accept-charset="utf-8">
                 {% csrf_token %}
-                <ul>
+                <ul class="horizontal right">
                     {{ login_form.as_ul() }}
-                    <li><input type="submit" value="Continue →"></li>
+                    <li><input type="submit" value="{% trans %} Login {% endtrans %}"></li>
                 </ul>
             </form>
             

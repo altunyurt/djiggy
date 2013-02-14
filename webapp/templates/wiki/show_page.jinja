@@ -1,6 +1,8 @@
-{% extends "base.jinja" %}
+{% extends "wiki/wiki_base.jinja" %}
 
 {% block content %}
+    {{ super() }}
+
     {{ page.readable_title }}
     <hr>
     {{ page.current.content_html }}

@@ -1,6 +1,7 @@
-{% extends "base.jinja" %}
+{% extends "wiki/wiki_base.jinja" %}
 
 {% block content %}
+    {{ super() }}
     <p>
         {% trans url = url_for('wiki_create_page', page_title) %}
         We couldn't find the page you ar looking for, maybe some of the following pages might be it. If not,

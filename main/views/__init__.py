@@ -109,5 +109,3 @@ def wiki_show_diffs(request, page_title):
     diff = show_diff(revision1.content_html, revision2.content_html)
     return render_to_response("wiki/show_diff.jinja", locals())
 
-def wiki_show_user(request, user_id, full_name=None):
-    return HttpResponse("")

@@ -5,6 +5,7 @@
         <title></title>
         <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,400italic,600italic,700italic' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="/media/css/reset.css" type="text/css"/>
+        <link rel="stylesheet" href="/media/css/general.css" type="text/css"/>
         <link rel="stylesheet" href="/media/css/css3.css" type="text/css"/>
         <link rel="stylesheet" href="/media/css/grid.css" type="text/css"/>
         <link rel="stylesheet" href="/media/css/style.css" type="text/css"/>
@@ -17,25 +18,13 @@
             {% endif %}
         </header>
         <section id="main" class="row">
-            <section id="left_frame" class="col col_4">
+            <section id="left_frame" class="col col_3">
                 {% block left_frame %} 
-                    <div>
-                        hurr
-                    </div>
+                    <h3>{% trans %} Navigation {% endtrans %}</h3>
+
                 {% endblock left_frame %}
             </section>
-            <section id="content" class="col col_12">
-            {% if page_name != "login_page" %}
-                <ul id="page_commands">
-                    {% if page_name == "edit_page" %}
-                    <li><a href="{{ url_for('wiki_show_page', page_title) }}">{% trans %}Read{% endtrans %}</a></li>
-                    {% else %}
-                    <li><a href="{{ url_for('wiki_edit_page', page_title) }}">{% trans %}Edit{% endtrans %}</a></li>
-                    {% endif %}
-                    <li><a href="{{ url_for('wiki_list_revisions', page_title) }}">{% trans %}Page History{% endtrans %}</a></li>
-                </ul>
-            {% endif %}
-                <hr />
+            <section id="content" class="col col_13">
                 {% if messages %}
                     {% for message in messages %}
                         <div class="{{ message.tags }}">{{ message }}</div>
@@ -44,8 +33,10 @@
                 {% block content %} {% endblock %}
             </section>
         </section>
+        
         <footer class="row">
         </footer>
+
         <script type="text/javascript" src="/media/js/jquery/jquery-1.9.0.min.js"></script>
         {% block js %} {% endblock %}
     </body>

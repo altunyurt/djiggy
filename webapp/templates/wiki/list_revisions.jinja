@@ -1,6 +1,8 @@
-{% extends "base.jinja" %}
+{% extends "wiki/wiki_base.jinja" %}
 
 {% block content %}
+    {{ super() }}
+
     <form action="{{ url_for('wiki_show_diffs', page_title) }}" method="get" accept-charset="utf-8">
         <p><input type="submit" value="Compare revisions →"></p>
         <table id="revision_list">
