@@ -7,8 +7,9 @@ from main.models import Revision, ContentType
 from main.middleware import get_current_user
 
 class PageRevisionForm(forms.Form):
-    content = forms.CharField(widget=forms.Textarea())
-    message = forms.CharField(widget=forms.Textarea(), required=False)
+    content = forms.CharField(widget=forms.Textarea(attrs={"placeholder": _("Page content")}))
+    message = forms.CharField(widget=forms.Textarea(attrs={"placeholder": _("Edit message")}), 
+                              required=False)
 
     def __init__(self, *args, **kwargs):
         initial = kwargs.get("initial")

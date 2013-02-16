@@ -1,7 +1,7 @@
         {% if request.user.is_authenticated() %}
-            <ul class="horizontal right">
+            <ul id="user_nav" class="horizontal right">
                 <li> {{ request.user.full_name }} </li>
-                <li> {{ url_for("account_settings") }} </li>
+                <li> <a href='{{ url_for("account_settings") }}'>{% trans %} Account {% endtrans %}</a> </li>
                 <li><a href='{{ url_for("wiki_logout") }}'>{% trans %} Logout {% endtrans %}</a></li>
             </ul>
         {% else %}

@@ -1,16 +1,12 @@
-
 body {
     font-family: 'Source Sans Pro', sans-serif;
 }
 
 ul {
     list-style-type: none;
+    padding: 0 !important;
+    margin: 0 !important;
 
-    &#page_commands {
-        li {
-            margin-right: 20px;
-        }
-    }
 
     &#edit_commands {
         display: block;
@@ -46,7 +42,7 @@ section#main {
 }
 
 footer {
-    background-color: rgba(44,44,44, 0.2);
+    border-top: 1px solid #ccc;
 }
 
 textarea {
@@ -74,3 +70,54 @@ ins, del {
     display: inline-block;
 }
 
+div#content-top {
+    border-bottom: 1px solid #ccc;
+    height: auto;
+    overflow: hidden; 
+    margin-bottom: 10px;
+
+    ul {
+        margin: 0;
+        a {
+            margin-right: 20px;
+        }
+    }
+
+    input[type=submit] {
+    }
+}
+
+#user_nav {
+    a {
+        margin-right: 10px;
+    }
+}
+
+div.content_title {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+div.content_body {
+    font-size: 14px;
+
+    label {
+        // form field labels 
+        display: block;
+    }
+
+    input[type=text], textarea {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;   
+        width: 100%;
+    }
+}
+
+#preview_field {
+    background-color: rgba(200, 67, 98, 0.2);
+}
+
+header {
+    height: 90px;
+}

@@ -20,23 +20,26 @@
         <section id="main" class="row">
             <section id="left_frame" class="col col_3">
                 {% block left_frame %} 
-                    <h3>{% trans %} Navigation {% endtrans %}</h3>
+                    <h5>{% trans %} Navigation {% endtrans %}</h5>
 
                 {% endblock left_frame %}
             </section>
             <section id="content" class="col col_13">
                 {% if messages %}
                     {% for message in messages %}
-                        <div class="{{ message.tags }}">{{ message }}</div>
+                        <div class="message {{ message.tags }}">{{ message }}</div>
                     {% endfor %}
                 {% endif %}
                 {% block content %} {% endblock %}
+
+                <footer class="row">
+                    <div class="col col_13">
+                        <span>{{ lipsum() }}</span> 
+                    </div>
+                </footer>
             </section>
         </section>
         
-        <footer class="row">
-        </footer>
-
         <script type="text/javascript" src="/media/js/jquery/jquery-1.9.0.min.js"></script>
         {% block js %} {% endblock %}
     </body>

@@ -1,20 +1,31 @@
 {% extends "base.jinja" %}
 
 {% block content %}
-                <ul id="page_commands" class="right horizontal">
-                    {% if page_name == "edit_page" %}
-                    <li><a href="{{ url_for('wiki_show_page', page_title) }}">{% trans %}Read{% endtrans %}</a></li>
-                    {% else %}
-                    <li><a href="{{ url_for('wiki_edit_page', page_title) }}">{% trans %}Edit{% endtrans %}</a></li>
-                    {% endif %}
-                    <li><a href="{{ url_for('wiki_list_revisions', page_title) }}">{% trans %}Page History{% endtrans %}</a></li>
-                </ul>
+            <div id="content-top">
+                <form action="{{ url_for('wiki_search') }}" method="get" accept-charset="utf-8">
+                    <ul class="right horizontal">
+                        {% if page_name == "edit_page" %}
+                        <li><a href="{{ url_for('wiki_show_page', page_title) }}">{% trans %}Read{% endtrans %}</a></li>
+                        {% else %}
+                        <li><a href="{{ url_for('wiki_edit_page', page_title) }}">{% trans %}Edit{% endtrans %}</a></li>
+                        {% endif %}
+                        <li><a href="{{ url_for('wiki_list_revisions', page_title) }}">{% trans %}Page History{% endtrans %}</a></li>
+                        <li><input type="text" name="q" placeholder="{% trans %} Search {% endtrans %}"/></li>
+                        <li><input type="submit" value="→"></li>
+                    </ul>
+                </form>
+            </div>
+                
 {% endblock content %}
 
 {% block left_frame %}
     {{ super() }}
     <ul class="navigation">
-        <li><a href="{{ url_for('') }}"></a></li>
+        <li>blah</li>
+        <li>blah</li>
+        <li>blah</li>
+        <li>blah</li>
+        <li>blah</li>
     </ul>
 {% endblock left_frame %}
 

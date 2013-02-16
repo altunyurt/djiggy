@@ -26,6 +26,7 @@ urlpatterns += patterns(
     url(r'^wiki_revert_page_to_revision/(?P<page_title>\w+)/(?P<revision_id>\d+)/$', 'wiki_revert_page_to_revision',
         name='wiki_revert_page_to_revision'),
     url(r'^wiki_show_diff/(?P<page_title>\w+)/$', 'wiki_show_diffs', name='wiki_show_diffs'),
+    url(r"^wiki_search/$", "wiki_search", name="wiki_search"), 
     url(r'^(?P<page_title>\w+)/$', 'wiki_show_page', name='wiki_show_page'),
     url(r'^$', redirect_to, {"url": "/Index"}),
 )

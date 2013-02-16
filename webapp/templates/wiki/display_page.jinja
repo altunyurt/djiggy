@@ -1,0 +1,10 @@
+{% extends "wiki/wiki_base.jinja" %}
+
+{% block content %}
+    {{ super() }}
+
+    <div class="content_title">{{ page.readable_title }}</div>
+    <div class="content_body">
+        {{ page.current.content_html }}
+    </div>
+{% endblock %}

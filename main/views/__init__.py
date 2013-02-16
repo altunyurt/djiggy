@@ -40,6 +40,7 @@ def wiki_create_page(request, page_title):
     return render_to_response("wiki/create_or_edit_page.jinja", locals())
     
 
+@requires_login("wiki_login", _("Login required to be able to edit pages"))
 def wiki_edit_page(request, page_title):
     page = get_object_or_404(Page, title=page_title)
     current_revision = page.current
@@ -60,7 +61,7 @@ def wiki_edit_page(request, page_title):
 
 def wiki_show_page(request, page_title):
     page = get_object_or_404(Page, title=page_title)
-    return render_to_response("wiki/show_page.jinja", locals())
+    return render_to_response("wiki/display_page.jinja", locals())
 
 
 def wiki_show_similar_pages(request, page_title):
@@ -87,6 +88,7 @@ def wiki_list_revisions(request, page_title):
     return render_to_response("wiki/list_revisions.jinja", locals())
 
 
+@requires_login("wiki_login", _("Login required to be able to edit pages"))
 def wiki_revert_page_to_revision(request, page_title, revision_id):
     page = get_object_or_404(Page, title=page_title)
     revision = get_object_or_404(Revision, page=page, id=revision_id)
@@ -104,8 +106,17 @@ def wiki_revert_page_to_revision(request, page_title, revision_id):
 
 def wiki_show_diffs(request, page_title):
     """ show diffs of revisions of given page """
-    revision1 = get_object_or_404(Revision, page__title=page_title, id=request.GET.get("revision_1"))
-    revision2 = get_object_or_404(Revision, page__title=page_title, id=request.GET.get("revision_2"))
-    diff = show_diff(revision1.content_html, revision2.content_html)
+    rev1 = request.GET.get("revision_1")
+    rev2 = request.GET.get("revision_2")
+    if rev1 == rev2:
+        messages.warning(request, _("Please chose two different revisions"))
+    else:
+        revision1 = get_object_or_404(Revision, page__title=page_title, id=rev1)
+        revision2 = get_object_or_404(Revision, page__title=page_title, id=rev2)
+        diff = show_diff(revision1.content_html, revision2.content_html)
     return render_to_response("wiki/show_diff.jinja", locals())
 
+
+def wiki_search(request):
+    q = request.GET.get("q", "")
+    return render_to_response("wiki/search.jinja", locals())
