@@ -13,6 +13,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages 
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
+from django.db.models import Q
 
 from main.models import Page, Revision
 from main.forms import PageRevisionForm, RevertRevisionForm
@@ -118,5 +119,6 @@ def wiki_show_diffs(request, page_title):
 
 
 def wiki_search(request):
-    q = request.GET.get("q", "")
+    query_string = request.GET.get("q", "")
+    results = Page.objects.filter(Q(title__search=query_string) | Q(revision__content__search=query_string))
     return render_to_response("wiki/search.jinja", locals())

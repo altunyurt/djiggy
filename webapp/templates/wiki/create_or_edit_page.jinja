@@ -1,15 +1,15 @@
 {%  extends "wiki/wiki_base.jinja" %}
 
 {% if page %}
-    {% set page_name = "edit_page" %}
+    {% set page_type = "edit_page" %}
 {% else %}
-    {% set page_name = "create_page" %}
+    {% set page_type = "create_page" %}
 {% endif %}
 
 {% block content %}
     {{ super() }}
     <div class="content_title">
-    {% if page_name == "create_page" %}
+    {% if page_type == "create_page" %}
         {% trans %} Creating new page &ldquo;{{ page_title }}&rdquo; {% endtrans %}
     {% else %}
         {% trans %} Editing page &ldquo;{{ page_title }}&rdquo; {% endtrans %}

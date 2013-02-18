@@ -1,0 +1,15 @@
+{% extends "wiki/wiki_base.jinja" %}
+
+{% set page_type = "wiki_page" %}
+
+{% block content %}
+    {{ super() }}
+
+    {% trans %} Search results for {{ query_string }} {% endtrans %}
+    <ul>
+        {% for page in results %}
+            <li><a href='{{ url_for("wiki_show_page", page.title) }}'>{{ page.title }}</a></li>
+        {% endfor %}
+    </ul>
+
+{% endblock content %}

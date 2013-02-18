@@ -1,5 +1,6 @@
+    <div id="user_nav">
         {% if request.user.is_authenticated() %}
-            <ul id="user_nav" class="horizontal right">
+            <ul class="horizontal">
                 <li> {{ request.user.full_name }} </li>
                 <li> <a href='{{ url_for("account_settings") }}'>{% trans %} Account {% endtrans %}</a> </li>
                 <li><a href='{{ url_for("wiki_logout") }}'>{% trans %} Logout {% endtrans %}</a></li>
@@ -7,11 +8,11 @@
         {% else %}
             <form action="{{ url_for('wiki_login') }}" method="post" accept-charset="utf-8">
                 {% csrf_token %}
-                <ul class="horizontal right">
+                <ul class="horizontal">
                     {{ login_form.as_ul() }}
                     <li><input type="submit" value="{% trans %} Login {% endtrans %}"></li>
                 </ul>
             </form>
             
         {% endif %}
-
+    </div>

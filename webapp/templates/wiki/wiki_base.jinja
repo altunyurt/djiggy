@@ -4,12 +4,14 @@
             <div id="content-top">
                 <form action="{{ url_for('wiki_search') }}" method="get" accept-charset="utf-8">
                     <ul class="right horizontal">
-                        {% if page_name == "edit_page" %}
-                        <li><a href="{{ url_for('wiki_show_page', page_title) }}">{% trans %}Read{% endtrans %}</a></li>
-                        {% else %}
-                        <li><a href="{{ url_for('wiki_edit_page', page_title) }}">{% trans %}Edit{% endtrans %}</a></li>
+                        {% if page_type != "wiki_page" %}
+                            {% if page_type == "edit_page" %}
+                            <li><a href="{{ url_for('wiki_show_page', page_title) }}">{% trans %}Read{% endtrans %}</a></li>
+                            {% else%}
+                            <li><a href="{{ url_for('wiki_edit_page', page_title) }}">{% trans %}Edit{% endtrans %}</a></li>
+                            {% endif %}
+                            <li><a href="{{ url_for('wiki_list_revisions', page_title) }}">{% trans %}Page History{% endtrans %}</a></li>
                         {% endif %}
-                        <li><a href="{{ url_for('wiki_list_revisions', page_title) }}">{% trans %}Page History{% endtrans %}</a></li>
                         <li><input type="text" name="q" placeholder="{% trans %} Search {% endtrans %}"/></li>
                         <li><input type="submit" value="→"></li>
                     </ul>

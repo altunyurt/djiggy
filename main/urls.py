@@ -18,15 +18,15 @@ urlpatterns += patterns(
 
 urlpatterns += patterns(
     'main.views',
-    url(r'^wiki_show_similar_pages/(?P<page_title>\w+)/$', 'wiki_show_similar_pages', name='wiki_show_similar_pages'),
-    url(r'^wiki_preview_page/$', 'wiki_preview_page', name='wiki_preview_page'),
-    url(r'^wiki_create_page/(?P<page_title>\w+)/$', 'wiki_create_page', name='wiki_create_page'),
-    url(r'^wiki_edit_page/(?P<page_title>\w+)/$', 'wiki_edit_page', name='wiki_edit_page'),
-    url(r'^wiki_list_revisions/(?P<page_title>\w+)/$', 'wiki_list_revisions', name='wiki_list_revisions'),
-    url(r'^wiki_revert_page_to_revision/(?P<page_title>\w+)/(?P<revision_id>\d+)/$', 'wiki_revert_page_to_revision',
+    url(r'^wiki/show_similar_pages/(?P<page_title>\w+)/$', 'wiki_show_similar_pages', name='wiki_show_similar_pages'),
+    url(r'^wiki/preview_page/$', 'wiki_preview_page', name='wiki_preview_page'),
+    url(r'^wiki/create_page/(?P<page_title>\w+)/$', 'wiki_create_page', name='wiki_create_page'),
+    url(r'^wiki/edit_page/(?P<page_title>\w+)/$', 'wiki_edit_page', name='wiki_edit_page'),
+    url(r'^wiki/list_revisions/(?P<page_title>\w+)/$', 'wiki_list_revisions', name='wiki_list_revisions'),
+    url(r'^wiki/revert_page_to_revision/(?P<page_title>\w+)/(?P<revision_id>\d+)/$', 'wiki_revert_page_to_revision',
         name='wiki_revert_page_to_revision'),
-    url(r'^wiki_show_diff/(?P<page_title>\w+)/$', 'wiki_show_diffs', name='wiki_show_diffs'),
-    url(r"^wiki_search/$", "wiki_search", name="wiki_search"), 
+    url(r'^wiki/show_diff/(?P<page_title>\w+)/$', 'wiki_show_diffs', name='wiki_show_diffs'),
+    url(r"^wiki/search/$", "wiki_search", name="wiki_search"), 
     url(r'^(?P<page_title>\w+)/$', 'wiki_show_page', name='wiki_show_page'),
     url(r'^$', redirect_to, {"url": "/Index"}),
 )
