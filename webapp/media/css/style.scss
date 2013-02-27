@@ -6,6 +6,9 @@ body {
     font-size: 60px;
 }
 
+.right { float: right; }
+.left { float: left; }
+
 
 ul {
     list-style-type: none;
@@ -81,11 +84,16 @@ div#content-top {
     overflow: hidden; 
     margin-bottom: 10px;
 
-    ul {
+    ul, li {
         margin: 0;
         a {
             margin-right: 20px;
         }
+    }
+
+
+    input {
+        margin: 0;
     }
 
     input[type=submit] {
@@ -128,6 +136,14 @@ header {
     display: inline-block;
     height: auto;
     overflow: hidden;
+
+    .bigfont {
+        line-height: 1.5em;
+    }
+
+    a {
+        text-decoration: none;
+    }
 }
 
 #user_nav {

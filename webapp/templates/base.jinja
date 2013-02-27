@@ -4,45 +4,53 @@
         <meta charset="UTF-8">
         <title></title>
         <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,400italic,600italic,700italic' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="/media/css/reset.css" type="text/css"/>
-        <link rel="stylesheet" href="/media/css/general.css" type="text/css"/>
-        <link rel="stylesheet" href="/media/css/css3.css" type="text/css"/>
-        <link rel="stylesheet" href="/media/css/grid.css" type="text/css"/>
+        <link rel="stylesheet" href="/media/css/base.css" type="text/css"/>
+        <link rel="stylesheet" href="/media/css/layout.css" type="text/css"/>
+        <link rel="stylesheet" href="/media/css/skeleton.css" type="text/css"/>
         <link rel="stylesheet" href="/media/css/style.css" type="text/css"/>
         {% block head %} {% endblock %}
     </head>
     <body>
-        <header class="row">
-            <div id="logo">
-                <div class="bigfont">djiggy</div>
-                django based wiki
-            </div>
-            {% if page_name != "login_page" %}
-                {% include 'partial/top_right.jinja' %}
-            {% endif %}
-        </header>
-        <section id="main" class="row">
-            <section id="left_frame" class="col col_3">
-                {% block left_frame %} 
-                    <h5>{% trans %} Navigation {% endtrans %}</h5>
-
-                {% endblock left_frame %}
-            </section>
-            <section id="content" class="col col_13">
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="message {{ message.tags }}">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-                {% block content %} {% endblock %}
-
-                <footer class="row">
-                    <div class="col col_13">
-                        <span>{{ lipsum() }}</span> 
+        <div class="container">
+            <header class="row">
+                <div class="sixteen columns alpha omega">
+                    <div id="logo">
+                        <a href="/">
+                            <div class="bigfont">djiggy</div>
+                            django based wiki
+                        </a>
                     </div>
-                </footer>
+                    {% if page_name != "login_page" %}
+                        {% include 'partial/top_right.jinja' %}
+                    {% endif %}
+                </div>
+            </header>
+
+            
+            <section id="main" class="row">
+                <section id="left_frame" class="two columns alpha">
+                    {% block left_frame %} 
+                        <h5>{% trans %} Navigation {% endtrans %}</h5>
+
+                    {% endblock left_frame %}
+                </section>
+                <section id="content" class="fourteen columns omega">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="message {{ message.tags }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                    {% block content %} {% endblock %}
+
+                    <footer class="row">
+                        <div class="col col_13">
+                            <span>{{ lipsum() }}</span> 
+                        </div>
+                    </footer>
+                </section>
             </section>
-        </section>
+        
+        </div>
         
         <script type="text/javascript" src="/media/js/jquery/jquery-1.9.0.min.js"></script>
         {% block js %} {% endblock %}
