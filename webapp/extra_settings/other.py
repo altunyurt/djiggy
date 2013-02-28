@@ -26,3 +26,4 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 ) 
 
+AUTH_PROFILE_MODULE = 'main.Profile'

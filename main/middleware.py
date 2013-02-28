@@ -61,5 +61,5 @@ class RedirectToCreate(object):
     def process_exception(self, request, exception):
         if isinstance(exception, Http404):
             page_title = path_re.sub("", request.META.get("PATH_INFO"))
-            return HttpResponseRedirect(reverse_lazy("wiki_show_similar_pages", args=[page_title]))
+            return HttpResponseRedirect(reverse_lazy("show_similar_pages", args=[page_title]))
 

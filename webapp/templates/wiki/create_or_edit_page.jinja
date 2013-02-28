@@ -8,14 +8,14 @@
 
 {% block content %}
     {{ super() }}
-    <div class="content_title">
+    <h2 class="page_title">
     {% if page_type == "create_page" %}
         {% trans %} Creating new page &ldquo;{{ page_title }}&rdquo; {% endtrans %}
     {% else %}
         {% trans %} Editing page &ldquo;{{ page_title }}&rdquo; {% endtrans %}
     {% endif %}
-    </div>
-    <div class="content_body">
+    </h2>
+    <div class="page_body">
         <form action="." method="post" >
             {%  csrf_token %}
             <ul id="editform_ul">
@@ -50,7 +50,7 @@
 
             $("#preview").click(function(ev){
                 ev.preventDefault();
-                $.post("{{ url_for('wiki_preview_page')}}", 
+                $.post("{{ url_for('preview_page')}}", 
                         {content: $("#id_content").val()},
                         function(data){
                             $("#preview_field").html(data);

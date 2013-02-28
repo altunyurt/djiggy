@@ -1,0 +1,13 @@
+{% extends "base.jinja" %}
+{% block content %}
+    <h2 class="page_title">{% trans %} Account settings {% endtrans %}</h2>
+    <div class="page_content">
+        <form action="." method="post" accept-charset="utf-8">
+            {% csrf_token %}
+            <ul>
+                {{ accountform.as_ul() }}
+                <li><input type="submit" value="{% trans %} Update {% endtrans %} →"></li>
+            </ul>
+        </form>
+    </div> 
+{% endblock content %}

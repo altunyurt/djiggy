@@ -1,33 +1,35 @@
 # ~*~ coding:utf-8 ~*~
     
-from django.conf.urls.defaults import patterns, include, url
-from django.views.generic.simple import redirect_to
+from django.conf.urls import patterns, include, url
+from django.views.generic.base import RedirectView
 
 urlpatterns = patterns(
     'main.views.auth',
-    url(r'^auth/login/', 'wiki_login', name='wiki_login'),
-    url(r'^auth/register/', 'wiki_register', name='wiki_register'),
-    url(r'^auth/logout/', 'wiki_logout',  name='wiki_logout'),
+    url(r'^auth/login/', 'login', name='login'),
+    url(r'^auth/register/', 'register', name='register'),
+    url(r'^auth/logout/', 'logout',  name='logout'),
 )
 
 urlpatterns += patterns(
     'main.views.user',
     url(r'^user/account/$', 'account_settings', name='account_settings'),
-    url(r'^user/about/(?P<user_id>\d+)(?:/(?P<full_name>\w+))?/$', 'about_user', name='about_user'),
+    url(r'^user/profile/(?:(?P<user_id>\d+)(?:/(?P<full_name>\w+))?/)?$', 'view_profile', name='view_profile'),
+    url(r'^user/profile/update/(?P<user_id>\d+)(?:/(?P<full_name>\w+))?/$', 'profile_settings',
+        name='profile_settings'),
 )
 
 urlpatterns += patterns(
     'main.views',
-    url(r'^wiki/show_similar_pages/(?P<page_title>\w+)/$', 'wiki_show_similar_pages', name='wiki_show_similar_pages'),
-    url(r'^wiki/preview_page/$', 'wiki_preview_page', name='wiki_preview_page'),
-    url(r'^wiki/create_page/(?P<page_title>\w+)/$', 'wiki_create_page', name='wiki_create_page'),
-    url(r'^wiki/edit_page/(?P<page_title>\w+)/$', 'wiki_edit_page', name='wiki_edit_page'),
-    url(r'^wiki/list_revisions/(?P<page_title>\w+)/$', 'wiki_list_revisions', name='wiki_list_revisions'),
-    url(r'^wiki/revert_page_to_revision/(?P<page_title>\w+)/(?P<revision_id>\d+)/$', 'wiki_revert_page_to_revision',
-        name='wiki_revert_page_to_revision'),
-    url(r'^wiki/show_diff/(?P<page_title>\w+)/$', 'wiki_show_diffs', name='wiki_show_diffs'),
-    url(r"^wiki/search/$", "wiki_search", name="wiki_search"), 
-    url(r'^(?P<page_title>\w+)/$', 'wiki_show_page', name='wiki_show_page'),
-    url(r'^$', redirect_to, {"url": "/Index"}),
+    url(r'^$', 'index', name='index'),
+    url(r'^wiki/show_similar_pages/(?P<page_title>\w+)/$', 'show_similar_pages', name='show_similar_pages'),
+    url(r'^wiki/preview_page/$', 'preview_page', name='preview_page'),
+    url(r'^wiki/create_page/(?P<page_title>\w+)/$', 'create_page', name='create_page'),
+    url(r'^wiki/edit_page/(?P<page_title>\w+)/$', 'edit_page', name='edit_page'),
+    url(r'^wiki/list_revisions/(?P<page_title>\w+)/$', 'list_revisions', name='list_revisions'),
+    url(r'^wiki/revert_page_to_revision/(?P<page_title>\w+)/(?P<revision_id>\d+)/$', 'revert_page_to_revision',
+        name='revert_page_to_revision'),
+    url(r'^wiki/show_diff/(?P<page_title>\w+)/$', 'show_diffs', name='show_diffs'),
+    url(r"^wiki/search/$", "search", name="search"), 
+    url(r'^(?P<page_title>\w+)/$', 'view_page', name='view_page'),
 )
 

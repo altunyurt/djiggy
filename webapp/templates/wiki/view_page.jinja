@@ -3,8 +3,8 @@
 {% block content %}
     {{ super() }}
 
-    <div class="content_title">{{ page.readable_title }}</div>
-    <div class="content_body">
+    <h2 class="page_title">{{ page.readable_title }}</h2>
+    <div class="page_body">
         {{ page.current.content_html }}
     </div>
 {% endblock %}

@@ -1,5 +1,5 @@
 body {
-    font-family: 'Source Sans Pro', sans-serif;
+    //font-family: 'Source Sans Pro', sans-serif;
 }
 
 .bigfont {
@@ -101,12 +101,10 @@ div#content-top {
 }
 
 
-div.content_title {
-    font-size: 42px;
-    margin-bottom: 10px;
+.page_title {
 }
 
-div.content_body {
+div.page_body {
     font-size: 14px;
 
     label {
@@ -120,6 +118,13 @@ div.content_body {
         box-sizing: border-box;   
         width: 100%;
     }
+}
+
+#content_body {
+    display: block;
+    height: auto;
+    overflow: hidden;
+    min-height: 400px;
 }
 
 #preview_field {
@@ -153,5 +158,11 @@ header {
 
     a {
         margin-right: 10px;
+    }
+}
+
+
+.message {
+    &.error {
     }
 }

@@ -13,7 +13,7 @@
     <body>
         <div class="container">
             <header class="row">
-                <div class="sixteen columns alpha omega">
+                <div class="sixteen columns">
                     <div id="logo">
                         <a href="/">
                             <div class="bigfont">djiggy</div>
@@ -28,27 +28,31 @@
 
             
             <section id="main" class="row">
-                <section id="left_frame" class="two columns alpha">
+                <section id="left_frame" class="three columns ">
                     {% block left_frame %} 
                         <h5>{% trans %} Navigation {% endtrans %}</h5>
 
                     {% endblock left_frame %}
                 </section>
-                <section id="content" class="fourteen columns omega">
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="message {{ message.tags }}">{{ message }}</div>
-                        {% endfor %}
-                    {% endif %}
-                    {% block content %} {% endblock %}
+                <section id="content" class="thirteen columns ">
+                    <section id="messages">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="message {{ message.tags }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </section>
+                    <section id="content_body">
+                        {% block content %} {% endblock %}
+                    </section>
 
-                    <footer class="row">
-                        <div class="col col_13">
-                            <span>{{ lipsum() }}</span> 
-                        </div>
-                    </footer>
                 </section>
             </section>
+            <footer class="row">
+                <div class="sixteen columns">
+                    <span>{{ lipsum()[:150] }}</span> 
+                </div>
+            </footer>
         
         </div>
         

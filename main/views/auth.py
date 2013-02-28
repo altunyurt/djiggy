@@ -1,7 +1,7 @@
 # ~*~ coding: utf-8 ~*~
 
 from django.contrib.auth.models import User
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login as dj_login, logout as dj_logout, authenticate
 from djtemps import render_to_response
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
@@ -9,13 +9,15 @@ from django.contrib import messages
 
 from main.forms import LoginForm, RegisterForm
 
+__all__ = ["logout", "login", "register"]
 
-def wiki_logout(request):
-    logout(request)
+
+def logout(request):
+    dj_logout(request)
     return HttpResponseRedirect("/")
 
 
-def wiki_login(request):
+def login(request):
     register_form = RegisterForm()
     if request.method == "POST":
         login_form = LoginForm(request.POST)
@@ -24,7 +26,7 @@ def wiki_login(request):
             user = authenticate(email=cdata.get("email"), 
                                 password=cdata.get("password"))
             if user:
-                login(request, user)
+                dj_login(request, user)
                 return HttpResponseRedirect(request.COOKIES.get("next", "/"))
             messages.error(request, _("Wrong email or password "))
 
@@ -33,7 +35,7 @@ def wiki_login(request):
     return render_to_response("auth/login_or_register.jinja", locals())
 
 
-def wiki_register(request):
+def register(request):
     if request.method == "POST":
         register_form = RegisterForm(request.POST)
         if register_form.is_valid():

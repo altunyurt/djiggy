@@ -3,7 +3,7 @@
 {% block content %}
     {{ super() }}
     <p>
-        {% trans url = url_for('wiki_create_page', page_title) %}
+        {% trans url = url_for('create_page', page_title) %}
         We couldn't find the page you ar looking for, maybe some of the following pages might be it. If not,
         you can create <a href="{{ url }}">new one here</a>
         {% endtrans %}

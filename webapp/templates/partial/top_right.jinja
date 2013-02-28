@@ -3,10 +3,10 @@
             <ul class="horizontal">
                 <li> {{ request.user.full_name }} </li>
                 <li> <a href='{{ url_for("account_settings") }}'>{% trans %} Account {% endtrans %}</a> </li>
-                <li><a href='{{ url_for("wiki_logout") }}'>{% trans %} Logout {% endtrans %}</a></li>
+                <li><a href='{{ url_for("logout") }}'>{% trans %} Logout {% endtrans %}</a></li>
             </ul>
         {% else %}
-            <form action="{{ url_for('wiki_login') }}" method="post" accept-charset="utf-8">
+            <form action="{{ url_for('login') }}" method="post" accept-charset="utf-8">
                 {% csrf_token %}
                 <ul class="horizontal">
                     {{ login_form.as_ul() }}

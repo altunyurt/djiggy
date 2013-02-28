@@ -8,7 +8,7 @@
     {% trans %} Search results for {{ query_string }} {% endtrans %}
     <ul>
         {% for page in results %}
-            <li><a href='{{ url_for("wiki_show_page", page.title) }}'>{{ page.title }}</a></li>
+            <li><a href='{{ url_for("view_page", page.title) }}'>{{ page.title }}</a></li>
         {% endfor %}
     </ul>
 
