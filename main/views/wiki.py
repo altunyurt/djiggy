@@ -98,7 +98,7 @@ def revert_page_to_revision(request, page_title, revision_id):
         if form.is_valid():
             form.save(page, revision)
             messages.success(request, action_messages.get("page_reverted") % revision.datetime)
-            return HttpResponseRedirect(reverse_lazy("list_revisions", args=[page_title]))
+            return HttpResponseRedirect(reverse_lazy("view_page", args=[page_title]))
     else:
         form = RevertRevisionForm()
     return render_to_response("wiki/revert_page_to_revision.jinja", locals())

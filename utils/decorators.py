@@ -95,7 +95,7 @@ class requires_login(_requires_something):
             return f(request, *args, **kwargs)
         response = HttpResponseRedirect(self.redirect_to)
         ''' login yonlendirmelerinde next gitmek istedigi adres olmali '''
-        response.set_cookie('next', request.path)
+        response.set_cookie('next', request.path.encode("utf-8"))
         messages.warning(request, self.message)
         return response
 

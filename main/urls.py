@@ -13,7 +13,7 @@ urlpatterns = patterns(
 urlpatterns += patterns(
     'main.views.user',
     url(r'^user/account/$', 'account_settings', name='account_settings'),
-    url(r'^user/profile/(?:(?P<user_id>\d+)(?:/(?P<full_name>\w+))?/)?$', 'view_profile', name='view_profile'),
+    url(r'^user/profile/(?:(?P<user_id>\d+)(?:/(?P<full_name>[\w\s]*))?/)?$', 'view_profile', name='view_profile'),
     url(r'^user/profile/update/(?P<user_id>\d+)(?:/(?P<full_name>\w+))?/$', 'profile_settings',
         name='profile_settings'),
 )
