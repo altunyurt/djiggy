@@ -17,15 +17,30 @@ class AuthTest(TestCase):
         response = self.client.post(reverse("login"), data=CREDENTIALS, follow=True)
         self.assertRedirects(response, reverse("index")) 
 
-    def testCreateUser(self):
+    def testUserOps(self):
         response = self.client.post(reverse("register"), 
                                     data={"email":"derp2@example.com", 
                                           "password":"derp", "password_confirm":"derp"}, follow=True)
         self.assertRedirects(response, reverse("index")) 
         logged_in = self.client.login(**{"email":"derp2@example.com", 
                                           "password":"derp"})
-
         self.assertEqual(logged_in, True)
+
+        
+        response = self.client.get(reverse("account_settings"))
+        self.assertEqual(response.status_code, 200) 
+
+        response = self.client.get(reverse("view_profile"))
+        self.assertEqual(response.status_code, 200) 
+
+        response = self.client.get(reverse("view_profile", args=[self.user.id, self.user.full_name]))
+        self.assertEqual(response.status_code, 200) 
+
+        self.client.get(reverse("profile_settings"))
+        self.assertEqual(response.status_code, 200) 
+
+        self.client.post(reverse("profile_settings"), data={"about":"Lipsum dolor sit amet"})
+        self.assertEqual(response.status_code, 200) 
 
 
 class WikiTest(TestCase):
@@ -92,4 +107,8 @@ class WikiTest(TestCase):
         """ testing search """
         #response = self.client.get(reverse("search"), data={"q": "Revision"})
         #self.assertEqual(response.status_code, 200)
+
+        """ page preview """
+        response = self.client.post(reverse("preview_page"), data={"content": "title\n======"})
+        self.assertEqual(response.status_code, 200)
 

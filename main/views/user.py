@@ -17,7 +17,7 @@ def view_profile(request, user_id=None, full_name=None):
     return render_to_response("user/view_profile.jinja", locals())
 
 
-def profile_settings(request, user_id, full_name):
+def profile_settings(request):
     if request.method == "POST":
         profileform = ProfileForm(request.POST, instance=request.user.profile)
         if profileform.is_valid():
