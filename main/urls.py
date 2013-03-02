@@ -1,7 +1,10 @@
 # ~*~ coding:utf-8 ~*~
     
 from django.conf.urls import patterns, include, url
+from django.core.urlresolvers import normalize
 from django.views.generic.base import RedirectView
+from utils.helpers import reverse_lazy
+from django.conf import settings
 
 urlpatterns = patterns(
     'main.views.auth',
@@ -17,9 +20,17 @@ urlpatterns += patterns(
     url(r'^user/profile/update/$', 'profile_settings', name='profile_settings'),
 )
 
+
+urlpatterns += patterns('main.views', url(r"^%s$" % settings.INDEX_PAGE_URL, 'index', name='index'))
+if settings.INDEX_USES_STATIC_VIEW:
+    if settings.INDEX_PAGE_URL != "":
+        urlpatterns += patterns('main.views', url(r"^$", RedirectView.as_view(url=reverse_lazy("index"))))
+else:
+    urlpatterns += patterns('main.views', url(r"^$", RedirectView.as_view(url=settings.INDEX_PAGE_URL)))
+
+
 urlpatterns += patterns(
     'main.views',
-    url(r'^$', 'index', name='index'),
     url(r'^wiki/show_similar_pages/(?P<page_title>\w+)/$', 'show_similar_pages', name='show_similar_pages'),
     url(r'^wiki/preview_page/$', 'preview_page', name='preview_page'),
     url(r'^wiki/create_page/(?P<page_title>\w+)/$', 'create_page', name='create_page'),

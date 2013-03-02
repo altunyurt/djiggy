@@ -15,5 +15,3 @@ from .wiki import *
 
 def index(request):
     return render_to_response("index.jinja", locals())
-
-

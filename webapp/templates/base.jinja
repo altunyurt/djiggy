@@ -31,8 +31,14 @@
                 <section id="left_frame" class="three columns ">
                     {% block left_frame %} 
                         <h5>{% trans %} Navigation {% endtrans %}</h5>
-
-                    {% endblock left_frame %}
+                        <ul class="navigation">
+                            <li><a href="{{ url_for("index") }}">{% trans %} Home Page {% endtrans %}</a></li>
+                            <li>blah</li>
+                            <li>blah</li>
+                            <li>blah</li>
+                            <li>blah</li>
+                        </ul>
+                    {% endblock  %}
                 </section>
                 <section id="content" class="thirteen columns ">
                     <section id="messages">

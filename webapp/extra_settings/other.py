@@ -27,3 +27,15 @@ AUTHENTICATION_BACKENDS = (
 ) 
 
 AUTH_PROFILE_MODULE = 'main.Profile'
+APPEND_SLASH = True
+PRODUCTION = True
+
+INDEX_USES_STATIC_VIEW = True
+#You can leave this empty only if INDEX_USES_STATIC_VIEW is True
+#/ at the end should be preserved if and only if INDEX_PAGE_NAME is anything other than ""
+INDEX_PAGE_URL = "Index/"
+
+# obviously obvious exception 
+if INDEX_PAGE_URL == "" and not INDEX_USES_STATIC_VIEW:
+    raise Exception("""settings.INDEX_URL_PATTERN should be set to anything other than r"^$" when
+                        settins.INDEX_USES_STATIC_VIEW is False""")

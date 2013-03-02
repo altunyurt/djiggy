@@ -131,8 +131,6 @@ INSTALLED_APPS = (
     'main'
 )
 
-APPEND_SLASH = True
-PRODUCTION = True
 
 try:
     from extra_settings.log import *
