@@ -16,7 +16,7 @@ urlpatterns = patterns(
 urlpatterns += patterns(
     'main.views.user',
     url(r'^user/account/$', 'account_settings', name='account_settings'),
-    url(r'^user/profile/(?:(?P<user_id>\d+)(?:/(?P<full_name>[\w\s]*))?/)?$', 'view_profile', name='view_profile'),
+    url(r'^user/profile/(?:(?P<user_id>\d+)(?:/(?P<full_name>\w*))?/)?$', 'view_profile', name='view_profile'),
     url(r'^user/profile/update/$', 'profile_settings', name='profile_settings'),
 )
 
@@ -38,6 +38,7 @@ urlpatterns += patterns(
     url(r'^wiki/list_revisions/(?P<page_title>\w+)/$', 'list_revisions', name='list_revisions'),
     url(r'^wiki/revert_page_to_revision/(?P<page_title>\w+)/(?P<revision_id>\d+)/$', 'revert_page_to_revision',
         name='revert_page_to_revision'),
+    url(r"^wiki/recent_changes/$", "recent_changes", name="recent_changes"), 
     url(r'^wiki/show_diff/(?P<page_title>\w+)/$', 'show_diffs', name='show_diffs'),
     url(r"^wiki/search/$", "search", name="search"), 
     url(r'^(?P<page_title>\w+)/$', 'view_page', name='view_page'),

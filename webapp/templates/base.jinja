@@ -32,23 +32,42 @@
                     {% block left_frame %} 
                         <h5>{% trans %} Navigation {% endtrans %}</h5>
                         <ul class="navigation">
-                            <li><a href="{{ url_for("index") }}">{% trans %} Home Page {% endtrans %}</a></li>
-                            <li>blah</li>
-                            <li>blah</li>
-                            <li>blah</li>
-                            <li>blah</li>
+                            <li><a href="{{ url_for("index") }}">{% trans %} Home page {% endtrans %}</a></li>
+                            <li><a href="{{ url_for("recent_changes") }}">{% trans %} Recent changes {% endtrans %}</a></li>
+                        </ul>
+                        <h5>{% trans %} Djiggy wiki {% endtrans %}</h5>
+                        <ul class="navigation">
+                            <li><a href="{{ url_for("view_page", "FAQ") }}">{% trans %} FAQ {% endtrans %}</a></li>
+                            <li><a href="{{ url_for("view_page", "Features") }}">{% trans %} Features {% endtrans %}</a></li>
+                            <li><a href="{{ url_for("view_page", "Wiki_Rules") }}">{% trans %} Wiki rules {% endtrans %}</a></li>
                         </ul>
                     {% endblock  %}
                 </section>
                 <section id="content" class="thirteen columns ">
-                    <section id="messages">
-                        {% if messages %}
-                            {% for message in messages %}
-                                <div class="message {{ message.tags }}">{{ message }}</div>
-                            {% endfor %}
-                        {% endif %}
-                    </section>
+                    <div id="content_top">
+                        <form action="{{ url_for('search') }}" method="get" accept-charset="utf-8">
+                            <ul class="right horizontal">
+                                {% if page_type != "wiki_page" %}
+                                    {% if page_type == "edit_page" %}
+                                    <li><a href="{{ url_for('view_page', page_title) }}">{% trans %}Read{% endtrans %}</a></li>
+                                    {% else%}
+                                    <li><a href="{{ url_for('edit_page', page_title) }}">{% trans %}Edit{% endtrans %}</a></li>
+                                    {% endif %}
+                                    <li><a href="{{ url_for('list_revisions', page_title) }}">{% trans %}Page History{% endtrans %}</a></li>
+                                {% endif %}
+                                <li><input type="text" name="q" placeholder="{% trans %} Search {% endtrans %}"/></li>
+                                <li><input type="submit" value="{% trans %} Go {% endtrans %}"></li>
+                            </ul>
+                        </form>
+                    </div>
                     <section id="content_body">
+                        <div id="messages">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="message {{ message.tags }}">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
                         {% block content %} {% endblock %}
                     </section>
 

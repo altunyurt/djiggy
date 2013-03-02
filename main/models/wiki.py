@@ -163,6 +163,7 @@ class ActionLog(_Model):
 
     class Meta:
         app_label = "main"
+        ordering = ["-id"]
 
     def __unicode__(self):
         ct = self.content_type

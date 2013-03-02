@@ -78,30 +78,36 @@ ins, del {
     display: inline-block;
 }
 
-div#content-top {
+div#content_top {
     border-bottom: 1px solid #ccc;
     height: auto;
     overflow: hidden; 
-    margin-bottom: 10px;
+    margin: -30px auto 10px auto;
 
     ul, li {
         margin: 0;
         a {
-            margin-right: 20px;
         }
     }
 
+    li {
+        padding: 0 4px;
+    }
 
     input {
         margin: 0;
+        line-height: 1.5em;
     }
 
-    input[type=submit] {
-    }
 }
 
 
 .page_title {
+    margin-bottom: 0;
+}
+
+hr {
+    margin-top: 0px;
 }
 
 div.page_body {

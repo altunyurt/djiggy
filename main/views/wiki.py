@@ -23,7 +23,8 @@ from utils.decorators import requires_login
 
 
 __all__ = ["create_page", "edit_page", "view_page", "show_similar_pages",
-          "preview_page", "list_revisions", "revert_page_to_revision", "show_diffs", "search"]
+          "preview_page", "list_revisions", "revert_page_to_revision", "show_diffs", 
+           "search", "recent_changes"]
 
 @requires_login("login", _("Login required to be able to edit pages"))
 def create_page(request, page_title):
@@ -122,3 +123,7 @@ def search(request):
     results = Page.objects.filter(Q(title__search=query_string) | Q(revision__content__search=query_string))
     return render_to_response("wiki/search.jinja", locals())
 
+
+def recent_changes(request):
+    actions = ActionLog.objects.all()
+    return render_to_response("wiki/recent_changes.jinja", locals())
