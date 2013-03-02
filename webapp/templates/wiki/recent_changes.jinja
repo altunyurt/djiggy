@@ -1,6 +1,22 @@
 {% extends "wiki/wiki_base.jinja" %}
 
+{% set page_type = "wiki_page" %}
+
 {% block content %}
     {{ super() }}
+    <h2 class="page_title">{% trans %} Recent changes {% endtrans %}</h2>
+    <hr />
+    <div class="page_body">
+        <ul>
+        {% for action in actions %}
+            <li>
+                <a href="{{ action.content_object.get_absolute_url() }}">{{ action.content_object.title }}</a></td>
+                {{ action.get_action_flag_display() }}</td>
+                to rev {{ action.content_object_other.datetime.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+                 by <a href="{{ url_for("view_profile", action.user.id, action.user.full_name )}}">{{ action.user }}</td>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
 
 {% endblock content %}

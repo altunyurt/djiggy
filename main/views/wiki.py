@@ -15,7 +15,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Q
 
-from main.models import Page, Revision
+from main.models import Page, Revision, ActionLog
 from main.forms import PageRevisionForm, RevertRevisionForm
 from main.messages import action_messages
 from utils.helpers import reverse_lazy, markdown_to_html, show_diff
@@ -120,7 +120,7 @@ def show_diffs(request, page_title):
 
 def search(request):
     query_string = request.GET.get("q", "")
-    results = Page.objects.filter(Q(title__search=query_string) | Q(revision__content__search=query_string))
+    results = Page.objects.filter(Q(title__icontains=query_string) | Q(revision__content__icontains=query_string))
     return render_to_response("wiki/search.jinja", locals())
 
 

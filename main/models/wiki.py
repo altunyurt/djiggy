@@ -7,7 +7,7 @@ import re
 
 from utils.model_base import _Model, models, QuerySet
 from main.middleware import get_current_user, get_remote_ip
-from utils.helpers import  markdown_to_html
+from utils.helpers import  markdown_to_html, reverse_lazy
 
 
 __all__ = ["Revision", "Page", "ActionLog"]
@@ -77,6 +77,10 @@ class Revision(_Base):
         self.content_html = markdown_to_html(self.content)
         return super(Revision, self).save(*args, **kwargs)
 
+    @property
+    def rid(self):
+        return self.datetime.strftime("%Y-%m-%d %H:%M:%S")
+
 
 
 class Page(_Base):
@@ -144,6 +148,8 @@ class Page(_Base):
         self.update(revision=revision)
         return self._createActionLog(REVERTED_TO_REVISION, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse_lazy("view_page", args=[self.title])
 
 class ActionLog(_Model):
     action_time = models.DateTimeField(auto_now=True)

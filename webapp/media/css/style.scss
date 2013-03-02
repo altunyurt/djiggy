@@ -41,6 +41,9 @@ ul {
 }
 
 section#content {
+    section {
+        padding: 10px;
+    }
 }
 
 section#left_frame {
@@ -170,5 +173,22 @@ header {
 
 .message {
     &.error {
+    }
+}
+
+ul.navigation {
+    padding: 10px 0 10px 10px !important;
+    background: #eee;
+    margin-bottom: 20px !important;
+
+    li {
+        margin-bottom: 1px;
+        &:before{
+            content: "» ";
+        }
+    }
+    a {
+        font-size: 0.9em;
+        text-decoration: none;
     }
 }
